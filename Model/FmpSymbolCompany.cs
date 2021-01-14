@@ -1,18 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace FmpDataContext.Model
 {
     /// <summary>
-    /// Stock
+    /// FmpSymbolCompany
     /// </summary>
     public class FmpSymbolCompany
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
-
+        
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
