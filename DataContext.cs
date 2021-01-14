@@ -71,5 +71,6 @@ namespace FmpDataContext
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<NotResolved> NotResolved { get; set; }
         public DbSet<NotUnique> NotUnique { get; set; }
+        public DbSet<FmpSymbolCompany> FmpSymbolCompany { get; set; }
     }
 }
