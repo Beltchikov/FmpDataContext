@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace FmpDataContext.Model
+{
+    public class DataTransfer
+    {
+        [Key]
+        public Guid Id { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+    }
+}
