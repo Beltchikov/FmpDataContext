@@ -22,6 +22,17 @@ namespace FmpDataContext.Model
 
         [JsonPropertyName("exchange")]
         public string Exchange { get; set; }
+
+        public FmpSymbolCompany ToFmpSymbolCompany()
+        {
+            return new FmpSymbolCompany
+            {
+                Symbol = this.Symbol,
+                Name = this.Name,
+                Price = this.Price,
+                Exchange = this.Exchange
+            };
+        }
     }
 }
 
