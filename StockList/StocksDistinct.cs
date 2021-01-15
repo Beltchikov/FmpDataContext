@@ -25,7 +25,7 @@ namespace FmpDataContext.StockList
         {
             var stocksDocsMissing = new List<Stock>();
 
-            foreach(string date in dates)
+            foreach (string date in dates)
             {
                 var stocksDocsMissingDate = (from stock in _stockList
                                              join income in dataContext.IncomeStatements
@@ -68,15 +68,6 @@ namespace FmpDataContext.StockList
             {
                 return _docsImported;
             }
-        }
-
-        /// <summary>
-        /// ToList
-        /// </summary>
-        /// <returns></returns>
-        public List<Stock> ToList()
-        {
-            return _stockList;
         }
     }
 }

@@ -60,5 +60,14 @@ namespace FmpDataContext.StockList
                 return Symbols.Aggregate((r, n) => r + Environment.NewLine + n);
             }
         }
+
+        /// <summary>
+        /// ToList
+        /// </summary>
+        /// <returns></returns>
+        public List<Stock> ToList()
+        {
+            return _stockList;
+        }
     }
 }
