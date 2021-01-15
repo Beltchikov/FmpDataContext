@@ -49,7 +49,7 @@ namespace FmpDataContext.StockList
         }
 
         /// <summary>
-        /// StockListBase
+        /// DocsMissing
         /// </summary>
         public StockListBase DocsMissing
         {
@@ -60,7 +60,7 @@ namespace FmpDataContext.StockList
         }
 
         /// <summary>
-        /// StockListBase
+        /// DocsImported
         /// </summary>
         public StockListBase DocsImported
         {
