@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FmpDataContext.SymbolAndDocs
+namespace FmpDataContext.SymbolDateAndDocs
 {
-    public class SymbolAndDocsComparer : IEqualityComparer<SymbolAndDocs>
+    public class SymbolAndDocsComparer : IEqualityComparer<SymbolDateAndDocs>
     {
-        public bool Equals(SymbolAndDocs x, SymbolAndDocs y)
+        public bool Equals(SymbolDateAndDocs x, SymbolDateAndDocs y)
         {
             if (x == null && y == null)
             {
@@ -24,7 +24,7 @@ namespace FmpDataContext.SymbolAndDocs
             return x.Symbol.ToUpper() == y.Symbol.ToUpper();
         }
 
-        public int GetHashCode([DisallowNull] SymbolAndDocs obj)
+        public int GetHashCode([DisallowNull] SymbolDateAndDocs obj)
         {
             int hash = Encoding.Unicode.GetBytes(obj.Symbol.ToUpper()).Aggregate((r, n) => (byte)(r + n));
             return hash;

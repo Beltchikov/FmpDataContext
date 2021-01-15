@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FmpDataContext.SymbolAndDocs
+namespace FmpDataContext.SymbolDateAndDocs
 {
-    public class SymbolAndDocsList : HashSet<SymbolAndDocs>
+    public class SymbolDateAndDocsList : HashSet<SymbolDateAndDocs>
     {
-        public SymbolAndDocsList() : base ()
+        public SymbolDateAndDocsList() : base ()
         {
                 
         }

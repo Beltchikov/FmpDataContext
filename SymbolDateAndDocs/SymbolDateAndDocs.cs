@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FmpDataContext.SymbolAndDocs
+namespace FmpDataContext.SymbolDateAndDocs
 {
-    public class SymbolAndDocs
+    public class SymbolDateAndDocs
     {
         public string Symbol { get; set; }
         public IncomeStatement IncomeStatement { get; set; }
