@@ -40,7 +40,7 @@ namespace FmpDataContext.StockList
                                              where ((stockIncome == null) || (stockIncomeBalance == null) || (stockIncomeBalanceCash == null))
                                              && !string.IsNullOrWhiteSpace(stock.Name)
                                              select stock).ToList();
-                stocksDocsMissing.AddRange(stocksDocsMissingDate);
+                stocksDocsMissing = stocksDocsMissing.Union(stocksDocsMissingDate).ToList();
             }
 
             _docsMissing = new StockListBase(stocksDocsMissing, dates, dataContext);
