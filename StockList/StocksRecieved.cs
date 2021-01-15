@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FmpDataContext.StockList
@@ -55,6 +56,17 @@ namespace FmpDataContext.StockList
             get
             {
                 return _stocksCleaned;
+            }
+        }
+
+        /// <summary>
+        /// AsJson
+        /// </summary>
+        public string AsJson
+        {
+            get
+            {
+                return JsonSerializer.Serialize(_stockList);
             }
         }
     }
