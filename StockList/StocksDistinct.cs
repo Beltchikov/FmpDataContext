@@ -69,5 +69,14 @@ namespace FmpDataContext.StockList
                 return _docsImported;
             }
         }
+
+        /// <summary>
+        /// ToList
+        /// </summary>
+        /// <returns></returns>
+        public List<Stock> ToList()
+        {
+            return _stockList;
+        }
     }
 }
