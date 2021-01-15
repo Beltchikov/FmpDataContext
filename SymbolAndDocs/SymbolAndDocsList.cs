@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace FmpDataContext.SymbolAndDocs
 {
-    public class SymbolAndDocsCollection : List<SymbolAndDocs>
+    public class SymbolAndDocsList : HashSet<SymbolAndDocs>
     {
-
+        public SymbolAndDocsList() : base ()
+        {
+                
+        }
     }
 }
