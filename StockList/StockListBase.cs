@@ -51,13 +51,18 @@ namespace FmpDataContext.StockList
         }
 
         /// <summary>
-        /// SymbolsAsText
+        /// SymbolsTop100AsText
         /// </summary>
-        public string SymbolsAsText
+        public string SymbolsTop100AsText
         {
             get
             {
-                return Symbols.Aggregate((r, n) => r + Environment.NewLine + n);
+                if(!Symbols.Any())
+                {
+                    return string.Empty;
+                }
+                               
+                return Symbols.OrderBy(s=>s).Take(100).Aggregate((r, n) => r + Environment.NewLine + n);
             }
         }
 
