@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FmpDataContext.SymbolDateAndDocs
 {
-    public class SymbolAndDocsComparer : IEqualityComparer<SymbolDateAndDocs>
+    public class SymbolDateAndDocsComparer : IEqualityComparer<SymbolDateAndDocs>
     {
         public bool Equals(SymbolDateAndDocs x, SymbolDateAndDocs y)
         {
