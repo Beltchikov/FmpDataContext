@@ -69,12 +69,23 @@ namespace FmpDataContext.SymbolDateAndDocs
             }
         }
 
+        /// <summary>
+        /// CompletedButNotSaved
+        /// </summary>
         public List<SymbolDateAndDocs> CompletedButNotSaved
         {
             get
             {
                 return _symbolDateAndDocsList.Where(sdd => sdd.Completed && !sdd.Persisted).ToList();
             }
+        }
+
+        /// <summary>
+        /// Clear
+        /// </summary>
+        public void Clear()
+        {
+            _symbolDateAndDocsList.Clear();
         }
     }
 }

@@ -59,12 +59,12 @@ namespace FmpDataContext.SymbolDateAndDocs
         /// <summary>
         /// Persisted
         /// </summary>
-        public bool Persisted { get; set; }
+        public bool Persisted { get; private set; }
 
         /// <summary>
         /// PersistenceFailed
         /// </summary>
-        public bool PersistenceFailed { get; set; }
+        public bool PersistenceFailed { get; private set; }
 
         /// <summary>
         /// Symbol
@@ -112,11 +112,13 @@ namespace FmpDataContext.SymbolDateAndDocs
                 _dataContext.Set<BalanceSheet>().Add(BalanceSheet);
                 _dataContext.Set<CashFlowStatement>().Add(CashFlowStatement);
                 _dataContext.SaveChanges();
+                Persisted = true;
 
                 return string.Empty;
             }
             catch (Exception exception)
             {
+                PersistenceFailed = true;
                 return exception.ToString();
             }
         }
