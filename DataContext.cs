@@ -72,5 +72,6 @@ namespace FmpDataContext
         public DbSet<NotResolved> NotResolved { get; set; }
         public DbSet<NotUnique> NotUnique { get; set; }
         public DbSet<FmpSymbolCompany> FmpSymbolCompany { get; set; }
+        public DbSet<ImportErrorFmpSymbol> ImportErrorFmpSymbol { get; set; }
     }
 }
