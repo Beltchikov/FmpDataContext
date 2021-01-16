@@ -13,6 +13,7 @@ namespace FmpDataContext.StockList
     public class StocksDistinct : StockListBase
     {
         protected StockListBase _docsMissing;
+        protected StockListBase _docsMissingNoImportError;
         protected StockListBase _docsImported;
 
         /// <summary>
@@ -22,6 +23,26 @@ namespace FmpDataContext.StockList
         /// <param name="dates"></param>
         /// <param name="dataContext"></param>
         internal StocksDistinct(List<Stock> stockList, List<string> dates, DataContext dataContext) : base(stockList, dates, dataContext)
+        {
+            var stocksDocsMissing = DocsMissingAsList(dates, dataContext);
+            _docsMissing = new StockListBase(stocksDocsMissing, dates, dataContext);
+
+            var importErrorFmpSymbolList = (from importErrorFmpSymbol in dataContext.ImportErrorFmpSymbol
+                                            select importErrorFmpSymbol.Symbol).ToList();
+            var docsMissingNoImportError = stocksDocsMissing.Where(s => ! importErrorFmpSymbolList.Contains(s.Symbol)).ToList();
+            _docsMissingNoImportError = new StockListBase(docsMissingNoImportError, dates, dataContext);
+
+            var stocksDocsImported = _stockList.Except(stocksDocsMissing, new CompanyNameComparer()).ToList();
+            _docsImported = new StockListBase(stocksDocsImported, dates, dataContext);
+        }
+
+        /// <summary>
+        /// DocsMissingAsList
+        /// </summary>
+        /// <param name="dates"></param>
+        /// <param name="dataContext"></param>
+        /// <returns></returns>
+        private List<Stock> DocsMissingAsList(List<string> dates, DataContext dataContext)
         {
             var stocksDocsMissing = new List<Stock>();
 
@@ -43,9 +64,7 @@ namespace FmpDataContext.StockList
                 stocksDocsMissing = stocksDocsMissing.Union(stocksDocsMissingDate).ToList();
             }
 
-            _docsMissing = new StockListBase(stocksDocsMissing, dates, dataContext);
-            var stocksDocsImported = _stockList.Except(stocksDocsMissing, new CompanyNameComparer()).ToList();
-            _docsImported = new StockListBase(stocksDocsImported, dates, dataContext);
+            return stocksDocsMissing;
         }
 
         /// <summary>
@@ -56,6 +75,17 @@ namespace FmpDataContext.StockList
             get
             {
                 return _docsMissing;
+            }
+        }
+
+        /// <summary>
+        /// DocsMissingNoImportError
+        /// </summary>
+        public StockListBase DocsMissingNoImportError
+        {
+            get
+            {
+                return _docsMissingNoImportError;
             }
         }
 
