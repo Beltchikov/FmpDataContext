@@ -21,7 +21,7 @@ namespace FmpDataContext.SymbolDateAndDocs
         /// </summary>
         public SymbolDateAndDocsList(DataContext dataContext)
         {
-            _symbolDateAndDocsList = new HashSet<SymbolDateAndDocs>(9);
+            _symbolDateAndDocsList = new HashSet<SymbolDateAndDocs>();
             _dataContext = dataContext;
         }
 
