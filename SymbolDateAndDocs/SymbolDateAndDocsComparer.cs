@@ -7,8 +7,17 @@ using System.Threading.Tasks;
 
 namespace FmpDataContext.SymbolDateAndDocs
 {
+    /// <summary>
+    /// SymbolDateAndDocsComparer
+    /// </summary>
     public class SymbolDateAndDocsComparer : IEqualityComparer<SymbolDateAndDocs>
     {
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public bool Equals(SymbolDateAndDocs x, SymbolDateAndDocs y)
         {
             if (x == null && y == null)
@@ -21,12 +30,17 @@ namespace FmpDataContext.SymbolDateAndDocs
                 return false;
             }
 
-            return x.Symbol.ToUpper() == y.Symbol.ToUpper();
+            return x.SymbolDate.ToUpper() == y.SymbolDate.ToUpper();
         }
 
+        /// <summary>
+        /// GetHashCode
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public int GetHashCode([DisallowNull] SymbolDateAndDocs obj)
         {
-            int hash = Encoding.Unicode.GetBytes(obj.Symbol.ToUpper()).Aggregate((r, n) => (byte)(r + n));
+            int hash = Encoding.Unicode.GetBytes(obj.SymbolDate.ToUpper()).Aggregate((r, n) => (byte)(r + n));
             return hash;
         }
     }
