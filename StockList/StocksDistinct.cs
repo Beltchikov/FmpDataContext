@@ -25,7 +25,7 @@ namespace FmpDataContext.StockList
         /// <param name="dataContext"></param>
         internal StocksDistinct(List<Stock> stockList, List<string> years, List<string> dates, DataContext dataContext) : base(stockList, years, dates, dataContext)
         {
-            var stocksDocsMissing = DocsMissingAsList(years, dates, dataContext);
+            var stocksDocsMissing = DocsMissingAsList(dataContext);
             _docsMissing = new StockListBase(stocksDocsMissing, years, dates, dataContext);
 
             var importErrorFmpSymbolList = (from importErrorFmpSymbol in dataContext.ImportErrorFmpSymbol
@@ -37,52 +37,22 @@ namespace FmpDataContext.StockList
             _docsImported = new StockListBase(stocksDocsImported, years, dates, dataContext);
         }
 
-        /// <summary>
-        /// DocsMissingAsList
-        /// </summary>
-        /// <param name="years"></param>
-        /// <param name="dates"></param>
-        /// <param name="dataContext"></param>
-        /// <returns></returns>
-        private List<Stock> DocsMissingAsList(List<string> years, List<string> dates, DataContext dataContext)
+        private List<Stock> DocsMissingAsList(DataContext dataContext)
         {
             var stocksDocsMissing = new List<Stock>();
 
             foreach (var stock in _stockList)
             {
                 var symbol = stock.Symbol;
-                bool hasAtLeastForOneYear = false;
-
-                foreach (string year in years)
+                if (dataContext.IncomeStatements.Any(i => i.Symbol == symbol))
                 {
-                    if (IncomeStatementExists(symbol, year, dates, dataContext))
-                    {
-                        hasAtLeastForOneYear = true;
-                        break;
-                    }
+                    continue;
                 }
 
-                if (!hasAtLeastForOneYear)
-                {
-                    stocksDocsMissing.Add(stock);
-                }
+                stocksDocsMissing.Add(stock);
             }
 
             return stocksDocsMissing;
-        }
-
-        /// <summary>
-        /// IncomeStatementExists
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="year"></param>
-        /// <param name="dates"></param>
-        /// <param name="dataContext"></param>
-        /// <returns></returns>
-        private bool IncomeStatementExists(string symbol, string year, List<string> dates, DataContext dataContext)
-        {
-            var datesOfYear = dates.Select(d => year + d[4..]).ToList();
-            return dataContext.IncomeStatements.Any(i => i.Symbol == symbol && datesOfYear.Contains(i.Date));
         }
 
         /// <summary>
