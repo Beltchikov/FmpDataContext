@@ -30,7 +30,7 @@ namespace FmpDataContext.StockList
 
             var importErrorFmpSymbolList = (from importErrorFmpSymbol in dataContext.ImportErrorFmpSymbol
                                             select importErrorFmpSymbol.Symbol).ToList();
-            var docsMissingNoImportError = stocksDocsMissing.Where(s => ! importErrorFmpSymbolList.Contains(s.Symbol)).ToList();
+            var docsMissingNoImportError = stocksDocsMissing.Where(s => !importErrorFmpSymbolList.Contains(s.Symbol)).ToList();
             _docsMissingNoImportError = new StockListBase(docsMissingNoImportError, years, dates, dataContext);
 
             var stocksDocsImported = _stockList.Except(stocksDocsMissing, new CompanyNameComparer()).ToList();
@@ -48,31 +48,53 @@ namespace FmpDataContext.StockList
         {
             var stocksDocsMissing = new List<Stock>();
 
-            foreach (string year in years)
+            foreach (var stock in _stockList)
             {
-                var datesOfYear = dates.Select(d => year + d[4..]);
-                //var stocksDocsMissingYear = (from stock in _stockList
-                //                             join income in dataContext.IncomeStatements
-                //                             on new { a = stock.Symbol, b = date } equals new { a = income.Symbol, b = income.Date } into stockIncomeRecords
-                //                             from stockIncome in stockIncomeRecords.DefaultIfEmpty()
-                //                             join balance in dataContext.BalanceSheets
-                //                             on new { a = stock.Symbol, b = date } equals new { a = balance.Symbol, b = balance.Date } into stockIncomeBalanceRecords
-                //                             from stockIncomeBalance in stockIncomeBalanceRecords.DefaultIfEmpty()
-                //                             join cash in dataContext.CashFlowStatements
-                //                             on new { a = stock.Symbol, b = date } equals new { a = cash.Symbol, b = cash.Date } into stockIncomeBalanceCashRecords
-                //                             from stockIncomeBalanceCash in stockIncomeBalanceCashRecords.DefaultIfEmpty()
-                //                             where ((stockIncome == null) || (stockIncomeBalance == null) || (stockIncomeBalanceCash == null))
-                //                             && !string.IsNullOrWhiteSpace(stock.Name)
-                //                             select stock).ToList();
-
-                var stocksDocsMissingYear = (from stock in _stockList
-                                             where ! dataContext.IncomeStatements.Any(i => i.Symbol == stock.Symbol && datesOfYear.Contains(i.Date))
-                                             select stock).ToList();
-
-                stocksDocsMissing = stocksDocsMissing.Union(stocksDocsMissingYear).ToList();
+                var symbol = stock.Symbol;
+                foreach (string year in years)
+                {
+                    if( ! IncomeStatementExists(symbol, year, dates, dataContext))
+                    {
+                        stocksDocsMissing.Add(stock);
+                    }
+                }
             }
 
             return stocksDocsMissing;
+        }
+
+        /// <summary>
+        /// IncomeStatementExists
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <param name="year"></param>
+        /// <param name="dates"></param>
+        /// <param name="dataContext"></param>
+        /// <returns></returns>
+        private bool IncomeStatementExists(string symbol, string year, List<string> dates, DataContext dataContext)
+        {
+            var datesOfYear = dates.Select(d => year + d[4..]);
+            foreach(var date in datesOfYear)
+            {
+                if (IncomeStatementExists(symbol, date, dataContext))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// IncomeStatementExists
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <param name="date"></param>
+        /// <param name="dataContext"></param>
+        /// <returns></returns>
+        private bool IncomeStatementExists(string symbol, string date, DataContext dataContext)
+        {
+            return dataContext.IncomeStatements.Any(i => i.Symbol == symbol && i.Date == date);
         }
 
         /// <summary>
