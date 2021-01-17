@@ -51,12 +51,20 @@ namespace FmpDataContext.StockList
             foreach (var stock in _stockList)
             {
                 var symbol = stock.Symbol;
+                bool hasAtLeastForOneYear = false;
+
                 foreach (string year in years)
                 {
-                    if( ! IncomeStatementExists(symbol, year, dates, dataContext))
+                    if (IncomeStatementExists(symbol, year, dates, dataContext))
                     {
-                        stocksDocsMissing.Add(stock);
+                        hasAtLeastForOneYear = true;
+                        break;
                     }
+                }
+
+                if (!hasAtLeastForOneYear)
+                {
+                    stocksDocsMissing.Add(stock);
                 }
             }
 
