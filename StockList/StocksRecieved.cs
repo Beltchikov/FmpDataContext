@@ -19,7 +19,10 @@ namespace FmpDataContext.StockList
         /// StocksRecieved
         /// </summary>
         /// <param name="stockList"></param>
-        public StocksRecieved(List<Stock> stockList, List<string> dates, DataContext dataContext) : base(stockList, dates, dataContext)
+        /// <param name="years"></param>
+        /// <param name="dates"></param>
+        /// <param name="dataContext"></param>
+        public StocksRecieved(List<Stock> stockList, List<string> years, List<string> dates, DataContext dataContext) : base(stockList, years, dates, dataContext)
         {
             var stocksCleanedList = new List<Stock>();
 
@@ -34,7 +37,7 @@ namespace FmpDataContext.StockList
                 Exchange = s.Exchange
             }).ToList();
 
-            _stocksCleaned = new StocksCleaned(stocksCleanedList, dates, dataContext);
+            _stocksCleaned = new StocksCleaned(stocksCleanedList, years, dates, dataContext);
         }
 
         /// <summary>
@@ -56,17 +59,6 @@ namespace FmpDataContext.StockList
             get
             {
                 return _stocksCleaned;
-            }
-        }
-
-        /// <summary>
-        /// AsJson
-        /// </summary>
-        public string AsJson
-        {
-            get
-            {
-                return JsonSerializer.Serialize(_stockList);
             }
         }
     }

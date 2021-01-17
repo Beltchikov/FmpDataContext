@@ -14,16 +14,22 @@ namespace FmpDataContext.StockList
     public class StockListBase
     {
         protected List<Stock> _stockList;
+        protected List<string> _years;
         protected List<string> _dates;
         protected DataContext _dataContext;
+
 
         /// <summary>
         /// StockListBase
         /// </summary>
         /// <param name="stocksRecieved"></param>
-        public StockListBase(List<Stock> stocksRecieved, List<string> dates, DataContext dataContext)
+        /// <param name="years"></param>
+        /// <param name="dates"></param>
+        /// <param name="dataContext"></param>
+        public StockListBase(List<Stock> stocksRecieved, List<string> years, List<string> dates, DataContext dataContext)
         {
             _stockList = stocksRecieved;
+            _years = years;
             _dates = dates;
             _dataContext = dataContext;
         }

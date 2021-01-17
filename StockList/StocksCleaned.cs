@@ -19,13 +19,16 @@ namespace FmpDataContext.StockList
         /// StocksCleaned
         /// </summary>
         /// <param name="stockList"></param>
-        internal StocksCleaned(List<Stock> stockList, List<string> dates, DataContext dataContext) : base(stockList, dates, dataContext)
+        /// <param name="years"></param>
+        /// <param name="dates"></param>
+        /// <param name="dataContext"></param>
+        internal StocksCleaned(List<Stock> stockList, List<string> years,  List<string> dates, DataContext dataContext) : base(stockList, years, dates, dataContext)
         {
             var companiesWithMultipleSymbols = CompaniesWithMultipleSymbols(_stockList);
             _stockList = _stockList.Except(companiesWithMultipleSymbols, new CompanyNameComparer()).ToList();
             var symbolsWithMultipleCompanyName = SymbolsWithMultipleCompanyName(_stockList);
             _stockList = _stockList.Except(symbolsWithMultipleCompanyName).ToList();
-            _stocksDistinct = new StocksDistinct(_stockList, dates, dataContext);
+            _stocksDistinct = new StocksDistinct(_stockList, years, dates, dataContext);
 
             _symbolCompany = companiesWithMultipleSymbols.Select(c => c.ToFmpSymbolCompany()).ToList();
             _symbolCompany.AddRange(symbolsWithMultipleCompanyName.Select(c => c.ToFmpSymbolCompany()));
