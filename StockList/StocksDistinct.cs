@@ -73,28 +73,8 @@ namespace FmpDataContext.StockList
         /// <returns></returns>
         private bool IncomeStatementExists(string symbol, string year, List<string> dates, DataContext dataContext)
         {
-            var datesOfYear = dates.Select(d => year + d[4..]);
-            foreach(var date in datesOfYear)
-            {
-                if (IncomeStatementExists(symbol, date, dataContext))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// IncomeStatementExists
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="date"></param>
-        /// <param name="dataContext"></param>
-        /// <returns></returns>
-        private bool IncomeStatementExists(string symbol, string date, DataContext dataContext)
-        {
-            return dataContext.IncomeStatements.Any(i => i.Symbol == symbol && i.Date == date);
+            var datesOfYear = dates.Select(d => year + d[4..]).ToList();
+            return dataContext.IncomeStatements.Any(i => i.Symbol == symbol && datesOfYear.Contains(i.Date));
         }
 
         /// <summary>
