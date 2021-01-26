@@ -10,7 +10,7 @@ CREATE VIEW dbo.ViewCompounder AS
 select 
 i.Symbol,
 i.Date,
-b.TotalStockholdersEquity * 100/nullif(i.NetIncome, 0) Roe,
+i.NetIncome * 100/nullif(b.TotalStockholdersEquity, 0) Roe,
 c.CapitalExpenditure *-100 /nullif(i.NetIncome, 0) ReinvestmentRate,
 b.TotalStockholdersEquity Equity,
 b.TotalLiabilities Debt,
