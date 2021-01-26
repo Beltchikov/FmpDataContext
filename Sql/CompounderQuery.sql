@@ -28,11 +28,8 @@ end;
 
 -- Query
 select top 100 * from ViewCompounder
-where Symbol in
-(
-select distinct Symbol from ViewCompounder
-where Date in (select date from @dates)
+where 1=1
+and Date in (select date from @dates)
 and Roe >= @roeFrom
-and ReinvenstmentRate >= @reinvestmentRateFrom
-)
+and ReinvestmentRate >= @reinvestmentRateFrom
 order by Roe desc
