@@ -5,7 +5,10 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FmpDataContext", "FmpDataContext.csproj", "{9720CBAD-BC7C-41D1-BA93-D7D2B30E97C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FmpDataConsole", "..\FmpDataConsole\FmpDataConsole.csproj", "{F7106924-D1B5-4409-BDB4-7DE69DD2EE1A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B6E8C65-5D30-44F5-B164-6293B1459D36}"
+	ProjectSection(SolutionItems) = preProject
+		README.txt = README.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +20,6 @@ Global
 		{9720CBAD-BC7C-41D1-BA93-D7D2B30E97C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9720CBAD-BC7C-41D1-BA93-D7D2B30E97C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9720CBAD-BC7C-41D1-BA93-D7D2B30E97C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7106924-D1B5-4409-BDB4-7DE69DD2EE1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7106924-D1B5-4409-BDB4-7DE69DD2EE1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7106924-D1B5-4409-BDB4-7DE69DD2EE1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7106924-D1B5-4409-BDB4-7DE69DD2EE1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
