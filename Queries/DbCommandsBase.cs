@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 
@@ -52,11 +53,11 @@ namespace FmpDataContext.Queries
         /// <param name="value"></param>
         protected static void AddDoubleParameter(DbCommand command, string name, DbType dbType, double? value)
         {
-            if(!value.HasValue)
+            if (!value.HasValue)
             {
                 return;
             }
-            
+
             var param = command.CreateParameter();
             param.ParameterName = name;
             param.DbType = dbType;

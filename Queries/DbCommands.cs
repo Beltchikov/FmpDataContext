@@ -19,7 +19,7 @@ namespace FmpDataContext.Queries
         /// <param name="parameters"></param>
         /// <param name="dates"></param>
         /// <returns></returns>
-        public static DbCommand Compounder(DbConnection connection, string sql, CompounderCountQueryParams parameters, List<string> dates)
+        public static DbCommand Compounder(DbConnection connection, string sql, CompounderQueryParams parameters, List<string> dates)
         {
             var command = connection.CreateCommand();
             command.CommandText = sql;
@@ -38,6 +38,7 @@ namespace FmpDataContext.Queries
 
             return command;
         }
+
 
         /// <summary>
         /// FindBySymbol

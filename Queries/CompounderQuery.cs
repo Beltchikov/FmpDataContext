@@ -23,7 +23,7 @@ namespace FmpDataContext.Queries
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public ResultSetList Run<T>(CompounderQueryParams<T> parameters)
+        public ResultSetList Run(CompounderQueryParams parameters)
         {
             ResultSetList resultSetList = null;
 
@@ -38,7 +38,7 @@ namespace FmpDataContext.Queries
                 return new ResultSetList(new List<ResultSet>()) { CountTotal = queryAsEnumerable.Count() };
             }
 
-            var queryAsEnumerableList = queryAsEnumerable.OrderByDescending(parameters.OrderFunction).ToList();
+            var queryAsEnumerableList = queryAsEnumerable.ToList();
 
             queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.RoeHistoryQuery, a => a.RoeHistory);
             queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.RevenueHistoryQuery, a => a.RevenueHistory);
@@ -48,9 +48,7 @@ namespace FmpDataContext.Queries
             queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.RevenueGrowthKoef, r => r.RevenueHistory);
             queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.EpsGrowthKoef, r => r.EpsHistory);
 
-            List<ResultSet> listOfResultSets = p.Descending
-                ? queryAsEnumerableList.OrderByDescending(p.OrderFunction).Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList()
-                : queryAsEnumerableList.OrderBy(p.OrderFunction).Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList();
+            List<ResultSet> listOfResultSets = queryAsEnumerableList.Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList();
             resultSetList = new ResultSetList(listOfResultSets);
             resultSetList.CountTotal = queryAsEnumerableList.Count();
 
@@ -69,7 +67,7 @@ namespace FmpDataContext.Queries
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public int Count(CompounderCountQueryParams parameters)
+        public int Count(CompounderQueryParams parameters)
         {
             var dates = FmpHelper.BuildDatesList(parameters.YearFrom, parameters.YearTo, parameters.Dates);
             var command = DbCommands.Compounder(DataContext.Database.GetDbConnection(), Sql.Compounder(parameters, dates), parameters, dates);
@@ -79,11 +77,10 @@ namespace FmpDataContext.Queries
         /// <summary>
         /// Run
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <param name="symbolList"></param>
         /// <returns></returns>
-        public ResultSetList FindBySymbol<T>(CompounderQueryParams<T> parameters, List<string> symbolList)
+        public ResultSetList FindBySymbol(CompounderQueryParams parameters, List<string> symbolList)
         {
             ResultSetList resultSetList = null;
 

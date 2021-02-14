@@ -15,9 +15,7 @@ namespace FmpDataContext.Queries
     public class SortBy
     {
         public string Text { get; set; }
-
+        public string Value { get; set; }
         public bool Descending { get; set; }
-
-        public Func<ResultSet, object> Function;
     }
 }

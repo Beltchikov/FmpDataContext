@@ -15,7 +15,7 @@ namespace FmpDataContext.Queries
         /// <param name="parameters"></param>
         /// <param name="dates"></param>
         /// <returns></returns>
-        public static string Compounder(CompounderCountQueryParams parameters, List<string> dates)
+        public static string Compounder(CompounderQueryParams parameters, List<string> dates)
         {
             string sqlBase = $@"select v.Symbol, v.Date, v.Equity, v.Debt, v.NetIncome, v.Roe, v.ReinvestmentRate, v.DebtEquityRatio
                 from ViewCompounder v 
@@ -55,9 +55,12 @@ namespace FmpDataContext.Queries
             {
                 sql += " and s.Exchange in(@Exchanges) ";
             }
-
+            
             string exchangesAsParam = CreateCommaSeparatedParams("@Exchanges", parameters.SelectedFmpExchanges.Count);
             sql = sql.Replace("@Exchanges", exchangesAsParam);
+
+            var ascDesc = parameters.Descending ? " DESC " : " ASC ";
+            sql += $" order by {parameters.OrderBy} {ascDesc} ";
 
             return sql;
         }

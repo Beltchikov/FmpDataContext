@@ -27,5 +27,6 @@ namespace FmpDataContext.Queries
                 return Exchanges.Where(e => e.Selected).SelectMany(s => s.ExchangesFmp).ToList();
             }
         }
+
     }
 }
