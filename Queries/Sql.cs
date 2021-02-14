@@ -22,33 +22,42 @@ namespace FmpDataContext.Queries
                 inner join Stocks s
                 on v.Symbol = s.Symbol
                 where 1 = 1
-                and v.Date in (@Dates)
-                and s.Exchange in(@Exchanges)
-                and v.Roe >= @RoeFrom
-                and v.ReinvestmentRate >= @ReinvestmentRateFrom";
+                and v.Date in (@Dates) ";
 
             string datesAsParam = CreateCommaSeparatedParams("@Dates", dates.Count);
             string sql = sqlBase.Replace("@Dates", datesAsParam);
 
-            string exchangesAsParam = CreateCommaSeparatedParams("@Exchanges", parameters.SelectedFmpExchanges.Count);
-            sql = sql.Replace("@Exchanges", exchangesAsParam);
-
-            if (parameters.RoeTo != 0)
+            if (parameters.RoeFrom.HasValue)
+            {
+                sql += " and v.Roe >= @RoeFrom ";
+            }
+            if (parameters.RoeTo.HasValue)
             {
                 sql += " and Roe <= @RoeTo ";
             }
-            if (parameters.ReinvestmentRateTo != 0)
+            if (parameters.ReinvestmentRateFrom.HasValue)
+            {
+                sql += " and v.ReinvestmentRate >= @ReinvestmentRateFrom ";
+            }
+            if (parameters.ReinvestmentRateTo.HasValue)
             {
                 sql += " and ReinvestmentRate <= @ReinvestmentRateTo ";
             }
-            if (parameters.DebtEquityRatioFrom != 0)
+            if (parameters.DebtEquityRatioFrom.HasValue)
             {
                 sql += " and DebtEquityRatio >= @DebtEquityRatioFrom ";
             }
-            if (parameters.DebtEquityRatioTo != 0)
+            if (parameters.DebtEquityRatioTo.HasValue)
             {
                 sql += " and DebtEquityRatio <= @DebtEquityRatioTo ";
             }
+            if (parameters.Exchanges.Any())
+            {
+                sql += " and s.Exchange in(@Exchanges) ";
+            }
+
+            string exchangesAsParam = CreateCommaSeparatedParams("@Exchanges", parameters.SelectedFmpExchanges.Count);
+            sql = sql.Replace("@Exchanges", exchangesAsParam);
 
             return sql;
         }
@@ -70,12 +79,12 @@ namespace FmpDataContext.Queries
             string symbolsAsParam = CreateCommaSeparatedParams("@Symbols", symbolList.Count);
             var sql = sqlBase.Replace("@Symbols", symbolsAsParam);
 
-            if(dates.Any())
+            if (dates.Any())
             {
                 string datesAsParam = CreateCommaSeparatedParams("@Dates", dates.Count);
                 sql = sql.Replace("@Dates", datesAsParam);
             }
-            
+
             return sql;
         }
 

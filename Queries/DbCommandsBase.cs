@@ -50,12 +50,17 @@ namespace FmpDataContext.Queries
         /// <param name="name"></param>
         /// <param name="dbType"></param>
         /// <param name="value"></param>
-        protected static void AddDoubleParameter(DbCommand command, string name, DbType dbType, double value)
+        protected static void AddDoubleParameter(DbCommand command, string name, DbType dbType, double? value)
         {
+            if(!value.HasValue)
+            {
+                return;
+            }
+            
             var param = command.CreateParameter();
             param.ParameterName = name;
             param.DbType = dbType;
-            param.Value = value;
+            param.Value = value.Value;
             command.Parameters.Add(param);
         }
     }

@@ -28,12 +28,12 @@ namespace FmpDataContext.Queries
             ResultSetList resultSetList = null;
 
             var p = parameters;
-            
+
             var dates = FmpHelper.BuildDatesList(parameters.YearFrom, parameters.YearTo, parameters.Dates);
             var command = DbCommands.Compounder(DataContext.Database.GetDbConnection(), Sql.Compounder(parameters, dates), parameters, dates);
 
             var queryAsEnumerable = QueryAsEnumerable(command, ResultSetFunctions.Compounder);
-            if(queryAsEnumerable.Count() > parameters.MaxResultCount)
+            if (queryAsEnumerable.Count() > parameters.MaxResultCount)
             {
                 return new ResultSetList(new List<ResultSet>()) { CountTotal = queryAsEnumerable.Count() };
             }
@@ -192,9 +192,9 @@ namespace FmpDataContext.Queries
         /// <param name="growthKoef"></param>
         /// <param name="funcResultSetParam"></param>
         /// <returns></returns>
-        private List<ResultSet> AdjustToGrowthKoef(List<ResultSet> inputResultSetList, int growthKoef, Func<ResultSet, List<double>> funcResultSetParam)
+        private List<ResultSet> AdjustToGrowthKoef(List<ResultSet> inputResultSetList, int? growthKoef, Func<ResultSet, List<double>> funcResultSetParam)
         {
-            if (growthKoef == 0)
+            if (!growthKoef.HasValue)
             {
                 return inputResultSetList;
             }
@@ -203,7 +203,7 @@ namespace FmpDataContext.Queries
 
             foreach (ResultSet resultSet in inputResultSetList)
             {
-                if (funcResultSetParam(resultSet).Grows() >= growthKoef)
+                if (funcResultSetParam(resultSet).Grows() >= growthKoef.Value)
                 {
                     resultSetList.Add(resultSet);
                 }
