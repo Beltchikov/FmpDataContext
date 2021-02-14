@@ -31,21 +31,28 @@ namespace FmpDataContext.Queries
             
             var dates = FmpHelper.BuildDatesList(parameters.YearFrom, parameters.YearTo, parameters.Dates);
             var command = DbCommands.Compounder(DataContext.Database.GetDbConnection(), Sql.Compounder(parameters, dates), parameters, dates);
-            var queryAsEnumerable = QueryAsEnumerable(command, ResultSetFunctions.Compounder).OrderByDescending(parameters.OrderFunction).ToList();
 
-            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, QueryFactory.RoeHistoryQuery, a => a.RoeHistory);
-            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, QueryFactory.RevenueHistoryQuery, a => a.RevenueHistory);
-            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, QueryFactory.EpsHistoryQuery, a => a.EpsHistory);
+            var queryAsEnumerable = QueryAsEnumerable(command, ResultSetFunctions.Compounder);
+            if(queryAsEnumerable.Count() > parameters.MaxResultCount)
+            {
+                return new ResultSetList(new List<ResultSet>()) { CountTotal = queryAsEnumerable.Count() };
+            }
 
-            queryAsEnumerable = AdjustToGrowthKoef(queryAsEnumerable, parameters.RoeGrowthKoef, r => r.RoeHistory);
-            queryAsEnumerable = AdjustToGrowthKoef(queryAsEnumerable, parameters.RevenueGrowthKoef, r => r.RevenueHistory);
-            queryAsEnumerable = AdjustToGrowthKoef(queryAsEnumerable, parameters.EpsGrowthKoef, r => r.EpsHistory);
+            var queryAsEnumerableList = queryAsEnumerable.OrderByDescending(parameters.OrderFunction).ToList();
+
+            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.RoeHistoryQuery, a => a.RoeHistory);
+            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.RevenueHistoryQuery, a => a.RevenueHistory);
+            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.EpsHistoryQuery, a => a.EpsHistory);
+
+            queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.RoeGrowthKoef, r => r.RoeHistory);
+            queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.RevenueGrowthKoef, r => r.RevenueHistory);
+            queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.EpsGrowthKoef, r => r.EpsHistory);
 
             List<ResultSet> listOfResultSets = p.Descending
-                ? queryAsEnumerable.OrderByDescending(p.OrderFunction).Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList()
-                : queryAsEnumerable.OrderBy(p.OrderFunction).Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList();
+                ? queryAsEnumerableList.OrderByDescending(p.OrderFunction).Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList()
+                : queryAsEnumerableList.OrderBy(p.OrderFunction).Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList();
             resultSetList = new ResultSetList(listOfResultSets);
-            resultSetList.CountTotal = queryAsEnumerable.Count();
+            resultSetList.CountTotal = queryAsEnumerableList.Count();
 
             resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.ReinvestmentHistoryQuery, a => a.ReinvestmentHistory);
             resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.IncrementalRoeQuery, a => a.IncrementalRoe);

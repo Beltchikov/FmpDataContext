@@ -14,5 +14,6 @@ namespace FmpDataContext.Queries
         public bool Descending { get; set; }
         public int PageSize { get; set; }
         public int CurrentPage { get; set; }
+        public int MaxResultCount { get; set; }
     }
 }
