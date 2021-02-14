@@ -162,5 +162,58 @@ namespace FmpDataContext.Model
                 };
             }
         }
+
+        /// <summary>
+        /// FromString
+        /// </summary>
+        /// <param name="exchangeString"></param>
+        /// <returns>Returns Exchange object or null if the object can not be created.</returns>
+        public static Exchange FromString(string exchangeString)
+        {
+            switch (exchangeString)
+            {
+                case "Nyse":
+                    return Nyse;
+                case "Nasdaq":
+                    return Nasdaq;
+                case "Lse":
+                    return Lse;
+                case "Hkse":
+                    return Hkse;
+                case "Asx":
+                    return Asx;
+                case "Nse":
+                    return Nse;
+                case "Canada":
+                    return Canada;
+                case "Europe":
+                    return Europe;
+                default:
+                    return null; ;
+            }
+        }
+
+        /// <summary>
+        /// FromString
+        /// </summary>
+        /// <param name="exchangesString"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static List<Exchange> FromString(string exchangesString, string separator)
+        {
+            List<Exchange> resultList = new List<Exchange>();
+
+            var stringList = exchangesString.Split(separator).Select(d => d.Trim()).ToList();
+            foreach (var exchangeString in stringList)
+            {
+                var exchange = Exchange.FromString(exchangeString);
+                if(exchange != null)
+                {
+                    resultList.Add(exchange);
+                }
+            }
+
+            return resultList;
+        }
     }
 }
