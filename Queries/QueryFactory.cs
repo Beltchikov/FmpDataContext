@@ -8,7 +8,7 @@ namespace FmpDataContext.Queries
     /// <summary>
     /// QueryFactory
     /// </summary>
-    public class QueryFactory
+    public class QueryFactory : IQueryFactory
     {
         private readonly object lockObject = new object();
         string _connectionString;
@@ -25,9 +25,8 @@ namespace FmpDataContext.Queries
         private CompanyNameQuery _companyNameQuery;
         private CountByYearsQuery _countByYearsQuery;
         private SymbolByCompanyQuery _symbolByCompanyQuery;
-        private DataContext dataContext;
 
-        private QueryFactory(){}
+        private QueryFactory() { }
 
         public QueryFactory(string connectionString)
         {
