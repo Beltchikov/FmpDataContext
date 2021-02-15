@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Security\" />
     <Folder Include="Sql\" />
     <Folder Include="SymbolDateAndDocs\" />
   </ItemGroup>
