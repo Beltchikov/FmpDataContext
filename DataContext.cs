@@ -40,7 +40,7 @@ namespace FmpDataContext
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(string.IsNullOrWhiteSpace(_connectionString))
+            if (string.IsNullOrWhiteSpace(_connectionString))
             {
                 _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FmpData;Integrated Security=True;";
             }
@@ -73,5 +73,12 @@ namespace FmpDataContext
         public DbSet<NotUnique> NotUnique { get; set; }
         public DbSet<FmpSymbolCompany> FmpSymbolCompany { get; set; }
         public DbSet<ImportErrorFmpSymbol> ImportErrorFmpSymbol { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace FmpDataContext.Queries
         public ResultSetList Run(CompounderQueryParams parameters)
         {
             ResultSetList resultSetList = null;
+            QueryFactory queryFactory = new QueryFactory(DataContext.ConnectionString);
 
             var p = parameters;
 
@@ -40,9 +41,9 @@ namespace FmpDataContext.Queries
 
             var queryAsEnumerableList = queryAsEnumerable.ToList();
 
-            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.RoeHistoryQuery, a => a.RoeHistory);
-            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.RevenueHistoryQuery, a => a.RevenueHistory);
-            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, QueryFactory.EpsHistoryQuery, a => a.EpsHistory);
+            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, queryFactory.RoeHistoryQuery, a => a.RoeHistory);
+            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, queryFactory.RevenueHistoryQuery, a => a.RevenueHistory);
+            queryAsEnumerableList = AddHistoryData(queryAsEnumerableList, parameters, queryFactory.EpsHistoryQuery, a => a.EpsHistory);
 
             queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.RoeGrowthKoef, r => r.RoeHistory);
             queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.RevenueGrowthKoef, r => r.RevenueHistory);
@@ -52,10 +53,10 @@ namespace FmpDataContext.Queries
             resultSetList = new ResultSetList(listOfResultSets);
             resultSetList.CountTotal = queryAsEnumerableList.Count();
 
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.ReinvestmentHistoryQuery, a => a.ReinvestmentHistory);
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.IncrementalRoeQuery, a => a.IncrementalRoe);
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.OperatingIncomeHistoryQuery, a => a.OperatingIncome);
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.CashConversionQuery, a => a.CashConversionHistory);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.ReinvestmentHistoryQuery, a => a.ReinvestmentHistory);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.IncrementalRoeQuery, a => a.IncrementalRoe);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.OperatingIncomeHistoryQuery, a => a.OperatingIncome);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.CashConversionQuery, a => a.CashConversionHistory);
             resultSetList = AddCompanyName(resultSetList);
             resultSetList = AddDebtEquityIncome(resultSetList);
 
@@ -83,14 +84,15 @@ namespace FmpDataContext.Queries
         public ResultSetList FindBySymbol(CompounderQueryParams parameters, List<string> symbolList)
         {
             ResultSetList resultSetList = null;
+            QueryFactory queryFactory = new QueryFactory(DataContext.ConnectionString);
 
             var dates = FmpHelper.BuildDatesList(parameters.YearFrom, parameters.YearTo, parameters.Dates);
             var command = DbCommands.FindBySymbol(DataContext.Database.GetDbConnection(), Sql.FindBySymbol(symbolList, dates), symbolList, dates);
             var queryAsEnumerable = QueryAsEnumerable(command, ResultSetFunctions.FindBySymbol).ToList();
 
-            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, QueryFactory.RoeHistoryQuery, a => a.RoeHistory);
-            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, QueryFactory.RevenueHistoryQuery, a => a.RevenueHistory);
-            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, QueryFactory.EpsHistoryQuery, a => a.EpsHistory);
+            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, queryFactory.RoeHistoryQuery, a => a.RoeHistory);
+            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, queryFactory.RevenueHistoryQuery, a => a.RevenueHistory);
+            queryAsEnumerable = AddHistoryData(queryAsEnumerable, parameters, queryFactory.EpsHistoryQuery, a => a.EpsHistory);
 
             queryAsEnumerable = AdjustToGrowthKoef(queryAsEnumerable, parameters.RoeGrowthKoef, r => r.RoeHistory);
             queryAsEnumerable = AdjustToGrowthKoef(queryAsEnumerable, parameters.RevenueGrowthKoef, r => r.RevenueHistory);
@@ -100,10 +102,10 @@ namespace FmpDataContext.Queries
             resultSetList = new ResultSetList(listOfResultSets);
             resultSetList.CountTotal = queryAsEnumerable.Count();
 
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.ReinvestmentHistoryQuery, a => a.ReinvestmentHistory);
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.IncrementalRoeQuery, a => a.IncrementalRoe);
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.OperatingIncomeHistoryQuery, a => a.OperatingIncome);
-            resultSetList = AddHistoryData(resultSetList, parameters, QueryFactory.CashConversionQuery, a => a.CashConversionHistory);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.ReinvestmentHistoryQuery, a => a.ReinvestmentHistory);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.IncrementalRoeQuery, a => a.IncrementalRoe);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.OperatingIncomeHistoryQuery, a => a.OperatingIncome);
+            resultSetList = AddHistoryData(resultSetList, parameters, queryFactory.CashConversionQuery, a => a.CashConversionHistory);
             resultSetList = AddCompanyName(resultSetList);
             resultSetList = AddDebtEquityIncome(resultSetList);
 
@@ -216,7 +218,8 @@ namespace FmpDataContext.Queries
         /// <returns></returns>
         private ResultSetList AddCompanyName(ResultSetList inputResultSetList)
         {
-            ResultSetList resultSetList = QueryFactory.CompanyNameQuery.Run(inputResultSetList);
+            QueryFactory queryFactory = new QueryFactory(DataContext.ConnectionString);
+            ResultSetList resultSetList = queryFactory.CompanyNameQuery.Run(inputResultSetList);
             return resultSetList;
         }
 
@@ -227,7 +230,8 @@ namespace FmpDataContext.Queries
         /// <returns></returns>
         private List<ResultSet> AddCompanyName(List<ResultSet> inputResultSetList)
         {
-            List<ResultSet> resultSetList = QueryFactory.CompanyNameQuery.Run(inputResultSetList);
+            QueryFactory queryFactory = new QueryFactory(DataContext.ConnectionString);
+            List<ResultSet> resultSetList = queryFactory.CompanyNameQuery.Run(inputResultSetList);
             return resultSetList;
         }
 
