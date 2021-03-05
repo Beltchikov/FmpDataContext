@@ -15,7 +15,7 @@ namespace FmpDataContext.Security
             for(int i = 0; i < data.ResultSets.Count; i++)
             {
                 var resultSet = data.ResultSets[i];
-                if(resultSet.Symbol.Contains("."))
+                if(!resultSet.Symbol.Contains("."))
                 {
                     resultSet.Symbol = MASK;
                     resultSet.Name = MASK;
