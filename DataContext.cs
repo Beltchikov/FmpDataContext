@@ -68,9 +68,6 @@ namespace FmpDataContext
         public DbSet<IncomeStatement> IncomeStatements { get; set; }
         public DbSet<BalanceSheet> BalanceSheets { get; set; }
         public DbSet<CashFlowStatement> CashFlowStatements { get; set; }
-        public DbSet<Contract> Contracts { get; set; }
-        public DbSet<NotResolved> NotResolved { get; set; }
-        public DbSet<NotUnique> NotUnique { get; set; }
         public DbSet<FmpSymbolCompany> FmpSymbolCompany { get; set; }
         public DbSet<ImportErrorFmpSymbol> ImportErrorFmpSymbol { get; set; }
         public string ConnectionString
