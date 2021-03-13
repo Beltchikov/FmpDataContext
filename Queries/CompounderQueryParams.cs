@@ -23,7 +23,7 @@ namespace FmpDataContext.Queries
         public double? DebtEquityRatioTo { get; set; }
         public List<Exchange> Exchanges { get; set; }
 
-        void SetExchanges(string[] exchangesArray)
+        public void SetExchanges(string[] exchangesArray)
         {
             if (exchangesArray == null)
             {
