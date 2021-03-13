@@ -22,6 +22,7 @@ namespace FmpDataContext.Queries
         public double? DebtEquityRatioFrom { get; set; }
         public double? DebtEquityRatioTo { get; set; }
         public List<Exchange> Exchanges { get; set; }
+        public string[] ExchangesAsArray { get; set; }
 
         public void SetExchanges(string[] exchangesArray)
         {
@@ -39,7 +40,14 @@ namespace FmpDataContext.Queries
         {
             get
             {
-                return Exchanges.Where(e => e.Selected).SelectMany(s => s.ExchangesFmp).ToList();
+                if (Exchanges == null)
+                {
+                    return new List<string>();
+                }
+                else
+                {
+                    return Exchanges.Where(e => e.Selected).SelectMany(s => s.ExchangesFmp).ToList();
+                }
             }
         }
         public string OrderBy { get; set; }
