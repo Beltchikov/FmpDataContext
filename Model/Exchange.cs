@@ -194,6 +194,27 @@ namespace FmpDataContext.Model
         }
 
         /// <summary>
+        /// FromArray
+        /// </summary>
+        /// <param name="exchangesArray"></param>
+        /// <returns></returns>
+        public static List<Exchange> FromArray(string[] exchangesArray)
+        {
+            List<Exchange> exchangeList = new List<Exchange>();
+
+            foreach(var exchangeString in exchangesArray)
+            {
+                Exchange exchange = Exchange.FromString(exchangeString);
+                if(exchange != null)
+                {
+                    exchangeList.Add(exchange);
+                }
+            }
+
+            return exchangeList;
+        }
+
+        /// <summary>
         /// FromString
         /// </summary>
         /// <param name="exchangesString"></param>
