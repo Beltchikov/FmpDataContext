@@ -18,7 +18,7 @@ namespace FmpDataContext.Queries
         /// </summary>
         /// <param name="inputResultSetList"></param>
         /// <returns></returns>
-        public ResultSetList Run(ResultSetList inputResultSetList)
+        public ResultSetListReinvestment Run(ResultSetListReinvestment inputResultSetList)
         {
             var symbols = inputResultSetList.ResultSets.Select(i => i.Symbol).ToList();
             var listSymbolNameQuery = DataContext.Stocks.Where(s => symbols.Contains(s.Symbol))
@@ -41,7 +41,7 @@ namespace FmpDataContext.Queries
         /// </summary>
         /// <param name="inputResultSetList"></param>
         /// <returns></returns>
-        public List<ResultSet> Run(List<ResultSet> inputResultSetList)
+        public List<ResultSetReinvestment> Run(List<ResultSetReinvestment> inputResultSetList)
         {
             var symbols = inputResultSetList.Select(i => i.Symbol).ToList();
             var listSymbolNameQuery = DataContext.Stocks.Where(s => symbols.Contains(s.Symbol))

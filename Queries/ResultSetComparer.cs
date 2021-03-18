@@ -8,9 +8,9 @@ namespace FmpDataContext.Queries
     /// <summary>
     /// ResultSetComparer
     /// </summary>
-    public class ResultSetComparer : IEqualityComparer<ResultSet>
+    public class ResultSetComparer : IEqualityComparer<ResultSetReinvestment>
     {
-        public bool Equals(ResultSet x, ResultSet y)
+        public bool Equals(ResultSetReinvestment x, ResultSetReinvestment y)
         {
             if (x == null && y == null)
             {
@@ -25,7 +25,7 @@ namespace FmpDataContext.Queries
             return x.Symbol.ToUpper() == y.Symbol.ToUpper();
         }
 
-        public int GetHashCode([DisallowNull] ResultSet obj)
+        public int GetHashCode([DisallowNull] ResultSetReinvestment obj)
         {
             int hash = Encoding.Unicode.GetBytes(obj.Symbol.ToUpper()).Aggregate((r, n) => (byte)(r + n));
             return hash;

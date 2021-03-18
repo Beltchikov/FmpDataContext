@@ -9,17 +9,17 @@ namespace FmpDataContext.Queries
     /// <summary>
     /// ResultSetList
     /// </summary>
-    public class ResultSetList
+    public class ResultSetListReinvestment
     {
-        private List<ResultSet> _resultSetList;
+        private List<ResultSetReinvestment> _resultSetList;
 
-        ResultSetList() { }
+        ResultSetListReinvestment() { }
 
         /// <summary>
         /// ResultSetList
         /// </summary>
         /// <param name="resultSetList"></param>
-        public ResultSetList(List<ResultSet> resultSetList)
+        public ResultSetListReinvestment(List<ResultSetReinvestment> resultSetList)
         {
             _resultSetList = resultSetList;
         }
@@ -32,7 +32,7 @@ namespace FmpDataContext.Queries
         /// <summary>
         /// ResultSets
         /// </summary>
-        public List<ResultSet> ResultSets
+        public List<ResultSetReinvestment> ResultSets
         {
             get
             {

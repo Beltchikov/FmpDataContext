@@ -8,6 +8,6 @@ namespace FmpDataContext.Security
 {
     public interface IDataProtector
     {
-        ResultSetList Protect(ResultSetList data);
+        ResultSetListReinvestment Protect(ResultSetListReinvestment data);
     }
 }

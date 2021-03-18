@@ -6,9 +6,9 @@ using System.Text;
 
 namespace FmpDataContext.Queries
 {
-    public class ResultSet
+    public class ResultSetReinvestment
     {
-        public ResultSet()
+        public ResultSetReinvestment()
         {
             RoeHistory = new List<double>();
             RevenueHistory = new List<double>();

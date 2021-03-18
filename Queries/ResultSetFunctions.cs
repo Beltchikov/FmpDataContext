@@ -14,13 +14,13 @@ namespace FmpDataContext.Queries
         /// </summary>
         /// <param name="dataTable"></param>
         /// <returns></returns>
-        public static IEnumerable<ResultSet> Compounder(DataTable dataTable)
+        public static IEnumerable<ResultSetReinvestment> Compounder(DataTable dataTable)
         {
-            List<ResultSet> listOfResultSets = new List<ResultSet>();
+            List<ResultSetReinvestment> listOfResultSets = new List<ResultSetReinvestment>();
 
             foreach (DataRow row in dataTable.Rows)
             {
-                ResultSet resultSet = new ResultSet();
+                ResultSetReinvestment resultSet = new ResultSetReinvestment();
 
                 resultSet.Symbol = (string)row["Symbol"];
                 resultSet.Date = (string)row["Date"];
@@ -42,7 +42,7 @@ namespace FmpDataContext.Queries
         /// </summary>
         /// <param name="dataTable"></param>
         /// <returns></returns>
-        public static IEnumerable<ResultSet> FindBySymbol(DataTable dataTable)
+        public static IEnumerable<ResultSetReinvestment> FindBySymbol(DataTable dataTable)
         {
             return Compounder(dataTable);
         }
@@ -52,12 +52,12 @@ namespace FmpDataContext.Queries
         /// </summary>
         /// <param name="dataTable"></param>
         /// <returns></returns>
-        public static IEnumerable<ResultSet> FindByCompany(DataTable dataTable)
+        public static IEnumerable<ResultSetReinvestment> FindByCompany(DataTable dataTable)
         {
-            List<ResultSet> listOfResultSets = new List<ResultSet>();
+            List<ResultSetReinvestment> listOfResultSets = new List<ResultSetReinvestment>();
             foreach (DataRow row in dataTable.Rows)
             {
-                ResultSet resultSet = new ResultSet();
+                ResultSetReinvestment resultSet = new ResultSetReinvestment();
 
                 resultSet.Symbol = (string)row["Symbol"];
                 resultSet.Name = (string)row["Name"];

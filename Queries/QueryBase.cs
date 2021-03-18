@@ -34,7 +34,7 @@ namespace FmpDataContext.Queries
         /// <param name="command"></param>
         /// <param name="resultSetFunction"></param>
         /// <returns></returns>
-        protected IEnumerable<ResultSet> QueryAsEnumerable(DbCommand command, Func<DataTable, IEnumerable<ResultSet>> resultSetFunction)
+        protected IEnumerable<ResultSetReinvestment> QueryAsEnumerable(DbCommand command, Func<DataTable, IEnumerable<ResultSetReinvestment>> resultSetFunction)
         {
             command.Connection.Open();
             DataTable dataTable = null;

@@ -8,7 +8,7 @@ namespace FmpDataContext.Security
 {
     public class DataProtector : IDataProtector
     {
-        public ResultSetList Protect(ResultSetList data)
+        public ResultSetListReinvestment Protect(ResultSetListReinvestment data)
         {
             const string MASK = "XXXX";
             
