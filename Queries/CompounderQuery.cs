@@ -49,7 +49,9 @@ namespace FmpDataContext.Queries
             queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.RevenueGrowthKoef, r => r.RevenueHistory);
             queryAsEnumerableList = AdjustToGrowthKoef(queryAsEnumerableList, parameters.EpsGrowthKoef, r => r.EpsHistory);
 
-            List<ResultSetReinvestment> listOfResultSets = queryAsEnumerableList.Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList();
+            List<ResultSetReinvestment> listOfResultSets = p.PageSize == 0 
+                ? queryAsEnumerableList.ToList()
+                : queryAsEnumerableList.Skip(p.CurrentPage * p.PageSize).Take(p.PageSize).ToList();
             resultSetList = new ResultSetListReinvestment(listOfResultSets);
             resultSetList.CountTotal = queryAsEnumerableList.Count();
 
