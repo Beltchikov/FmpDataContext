@@ -73,6 +73,22 @@ namespace FmpDataContext.StockList
         }
 
         /// <summary>
+        /// SymbolsTop1000AsText
+        /// </summary>
+        public string SymbolsTop1000AsText
+        {
+            get
+            {
+                if (!Symbols.Any())
+                {
+                    return string.Empty;
+                }
+
+                return Symbols.OrderBy(s => s).Take(1000).Aggregate((r, n) => r + Environment.NewLine + n);
+            }
+        }
+
+        /// <summary>
         /// ToList
         /// </summary>
         /// <returns></returns>
