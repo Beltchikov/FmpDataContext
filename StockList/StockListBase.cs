@@ -46,6 +46,39 @@ namespace FmpDataContext.StockList
         }
 
         /// <summary>
+        /// Years
+        /// </summary>
+        public List<string> Years
+        {
+            get
+            {
+                return _years;
+            }
+        }
+
+        /// <summary>
+        /// Dates
+        /// </summary>
+        public List<string> Dates
+        {
+            get
+            {
+                return _dates;
+            }
+        }
+
+        /// <summary>
+        /// DataContext
+        /// </summary>
+        public DataContext DataContext
+        {
+            get
+            {
+                return _dataContext;
+            }
+        }
+
+        /// <summary>
         /// Symbols
         /// </summary>
         public List<string> Symbols
